@@ -306,4 +306,32 @@ header h1 {
     height: 3.5rem;
     width: 3.5rem;
   }
+
+  .popup {
+    width: 80%;
+    margin: 70px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.664);
+    border-radius: 30px;
+    position: relative;
+    transition: all 3s ease-in-out;
+  }
+
+  .popup h2 {
+    padding: 10px auto;
+
+    color: rgb(228, 35, 35);
+    font-size: 1rem;
+  }
+
+  #play-again {
+    background-color: #363536;
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+    display: block;
+    margin: 0 auto;
+    width: 40%;
+    color: #fff;
+    border-radius: 5px;
+  }
 }
