@@ -17,7 +17,18 @@ body {
 }
 
 body {
-  background: #b1a5be;
+  background: #4568dc; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #b06ab3,
+    #4568dc
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #b06ab3,
+    #4568dc
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   font-family: 'Comfortaa', cursive;
   font-size: 16px;
 }
@@ -29,28 +40,29 @@ body {
   flex-direction: column;
 }
 
-/* the deck*/
+/* the deck */
 
 .deck {
-  width: 85%;
-  background: #d6c3d6;
-  padding: 1rem;
+  width: 660px;
+  min-height: 680px;
+  background: #f3f3f370;
+  padding: 32px;
   border-radius: 4px;
   box-shadow: 8px 9px 26px 0 rgba(46, 61, 73, 0.5);
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   margin: 0 0 3em;
 }
 
 .deck .card {
-  height: 3.7rem;
-  width: 3.7rem;
+  height: 125px;
+  width: 125px;
   margin: 0.2rem 0.2rem;
-  background: #942144dc;
+  background: #414040cc;
   font-size: 0;
-  color: #ffffff;
+  color: rgb(68, 66, 66);
   border-radius: 50%;
   cursor: pointer;
   display: flex;
@@ -61,7 +73,7 @@ body {
 
 .deck .card.open {
   transform: rotateY(0);
-  background: #f5cb40;
+  background: #f1cff0;
   cursor: default;
   animation-name: flipInY;
   -webkit-backface-visibility: visible !important;
@@ -75,9 +87,9 @@ body {
 
 .deck .card.match {
   cursor: default;
-  background: #01ffd5;
+  background: #e9d414bb;
   font-size: 33px;
-  animation-name: rubberBand;
+  animation-name: boing;
   -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
   animation-duration: 0.75s;
@@ -88,7 +100,7 @@ body {
   -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
   animation-duration: 0.75s;
-  background: #fc0000;
+  background: #ff000083;
 }
 
 .deck .card.disabled {
@@ -149,9 +161,10 @@ body {
 }
 
 .popup {
+  width: 45%;
   margin: 70px auto;
   padding: 20px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.664);
   border-radius: 30px;
   position: relative;
   transition: all 3s ease-in-out;
@@ -232,7 +245,7 @@ body {
   }
 }
 
-@keyframes rubberBand {
+@keyframes boing {
   from {
     transform: scale3d(1, 1, 1);
   }
