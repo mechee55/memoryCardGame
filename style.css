@@ -292,13 +292,14 @@ body {
 /****** Media queries
 ***************************/
 
-@media (max-width: 430px) {
+@media only screen and (max-width: 430px) {
   .deck {
     width: 85%;
+    height: 100%;
   }
 
   .deck .card {
-    height: 4.7rem;
-    width: 4.7rem;
+    height: 3.5rem;
+    width: 3.5rem;
   }
 }
