@@ -318,8 +318,6 @@ header h1 {
   }
 
   .popup h2 {
-    padding: 10px auto;
-
     color: rgb(228, 35, 35);
     font-size: 1rem;
   }
@@ -327,7 +325,7 @@ header h1 {
   #play-again {
     background-color: #363536;
     padding: 0.7rem 1rem;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     display: block;
     margin: 0 auto;
     width: 40%;
