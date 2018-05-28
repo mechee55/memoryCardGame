@@ -292,7 +292,7 @@ body {
 /****** Media queries
 ***************************/
 
-@media only screen and (max-width: 430px) {
+@media only screen and (max-width: 750px) {
   .deck {
     width: 85%;
     height: 100%;
