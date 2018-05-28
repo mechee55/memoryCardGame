@@ -1,18 +1,10 @@
 // place all the cards in the array
 let card = document.getElementsByClassName('card')
-let cards = [...card]
+let cardsInArray = [...card]
 let openedCards = []
 
 const deck = document.getElementById('card-deck')
-
-let moves = 0
-let counter = document.querySelector('.moves')
-const stars = document.querySelectorAll('.fa-star')
-
-let matchedCard = document.getElementsByClassName('match')
-
-let closeIcon = document.querySelector('.close')
-let popup = document.querySelector('#popup1')
+const popup = document.querySelector('#popup1')
 
 function shuffle (array) {
   let currentIndex = array.length, temporaryValue, randomIndex
@@ -28,45 +20,83 @@ function shuffle (array) {
   return array
 };
 
-// shuffles cards when page is refreshed / loads
-document.body.onload = startGame()
+// game timer
+let timer = document.querySelector('.timer')
+let second = 0
+let minute = 0
+var interval
+
+function time () {
+  interval = setInterval(function () {
+    timer.innerHTML = `${minute} mins ${second} secs`
+    second++
+    if (second === 60) {
+      minute++
+      second = 0
+    }
+  }, 1000)
+}
+
+// count player's moves
+let moves = 0
+let counter = document.querySelector('.moves')
+const stars = document.querySelectorAll('.fa-star')
+function count () {
+  moves++
+  counter.innerHTML = moves
+  // start timer on first click
+  if (moves === 1) {
+    second = 0
+    minute = 0
+    time()
+  }
+
+  if (moves > 8 && moves < 15) {
+    for (let i = 0; i < 3; i++) {
+      if (i > 1) {
+        stars[i].style.visibility = 'collapse'
+      }
+    }
+  } else if (moves > 16) {
+    for (let i = 0; i < 3; i++) {
+      stars[i].style.visibility = 'collapse'
+    }
+  }
+}
 
 function startGame () {
-  cards = shuffle(cards)
-  // remove all exisiting classes from each card
-  for (var i = 0; i < cards.length; i++) {
+  cardsInArray = shuffle(cardsInArray)
+  // loop through to remove all exisiting classes from each card
+  for (let i = 0; i < cardsInArray.length; i++) {
     deck.innerHTML = '';
-    [].forEach.call(cards, function (item) {
+    [].forEach.call(cardsInArray, function (item) {
       deck.appendChild(item)
     })
-    cards[i].classList.remove('show', 'open', 'match', 'disabled')
+    cardsInArray[i].classList.remove('show', 'open', 'match', 'disabled')
   }
   // reset moves
   moves = 0
   counter.innerHTML = moves
 
-  // reset rating
-  for (var i = 0; i < stars.length; i++) {
-    stars[i].style.color = '#FFC300'
-    stars[i].style.visibility = 'visible'
-  }
-
   // reset timer
   let timer = document.querySelector('.timer')
-  timer.innerHTML = '0 mins 0 secs'
   clearInterval(interval)
+  timer.innerHTML = '0 mins 0 secs'
 }
 
+// shuffles cards when page is loads
+document.body.onload = startGame()
+
 // toggles open and show class to display cards
-let displayCard = function (e) {
+let displayCard = (e) => {
   e.target.classList.toggle('open')
   e.target.classList.toggle('show')
   e.target.classList.toggle('disabled')
 }
 
 // loop to add event listeners to each card
-for (let i = 0; i < cards.length; i++) {
-  card = cards[i]
+for (let i = 0; i < cardsInArray.length; i++) {
+  card = cardsInArray[i]
   card.addEventListener('click', displayCard)
   card.addEventListener('click', cardOpen)
   card.addEventListener('click', congratsMessage)
@@ -77,7 +107,7 @@ function cardOpen () {
   openedCards.push(this)
   let length = openedCards.length
   if (length === 2) {
-    moveCounter()
+    count()
     if (openedCards[0].type === openedCards[1].type) {
       matched()
     } else {
@@ -87,6 +117,7 @@ function cardOpen () {
 };
 
 // when cards match
+let matchedCard = document.getElementsByClassName('match')
 function matched () {
   openedCards[0].classList.add('match', 'disabled')
   openedCards[1].classList.add('match', 'disabled')
@@ -110,14 +141,14 @@ function unmatched () {
 
 // disable cards temporarily
 function disable () {
-  Array.prototype.filter.call(cards, function (card) {
+  Array.prototype.filter.call(cardsInArray, function (card) {
     card.classList.add('disabled')
   })
 }
 
 // enable cards and disable matched cards
 function enable () {
-  Array.prototype.filter.call(cards, function (card) {
+  Array.prototype.filter.call(cardsInArray, function (card) {
     card.classList.remove('disabled')
     for (let i = 0; i < matchedCard.length; i++) {
       matchedCard[i].classList.add('disabled')
@@ -125,53 +156,22 @@ function enable () {
   })
 }
 
-// count player's moves
-function moveCounter () {
-  moves++
-  counter.innerHTML = moves
-  // start timer on first click
-  if (moves === 1) {
-    second = 0
-    minute = 0
-    startTimer()
-  }
-  // setting rates based on moves
-}
-
-// game timer
-let second = 0
-let minute = 0
-let timer = document.querySelector('.timer')
-var interval
-
-function startTimer () {
-  interval = setInterval(function () {
-    timer.innerHTML = `${minute} mins ${second} secs`
-    second++
-    if (second === 60) {
-      minute++
-      second = 0
-    }
-  }, 1100)
-}
+let starRating = document.querySelector('.stars').innerHTML
 
 function congratsMessage () {
+
   if (matchedCard.length === 16) {
     clearInterval(interval)
     let finalTime = timer.innerHTML
-
     popup.classList.add('show')
-
-    let starRating = document.querySelector('.stars').innerHTML
-
-    document.getElementById('finalMove').innerHTML = moves
+    document.getElementById('moveResult').innerHTML = moves
     document.getElementById('starRating').innerHTML = starRating
-    document.getElementById('totalTime').innerHTML = finalTime
-
+    document.getElementById('timeResult').innerHTML = finalTime
     closePopup()
   };
 }
 
+let closeIcon = document.querySelector('.close')
 function closePopup () {
   closeIcon.addEventListener('click', function () {
     popup.classList.remove('show')

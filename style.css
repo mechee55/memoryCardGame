@@ -166,8 +166,8 @@ header h1 {
 
 .popup {
   width: 45%;
-  margin: 70px auto;
-  padding: 20px;
+  margin: 80px auto;
+  padding: 30px;
   background: rgba(255, 255, 255, 0.664);
   border-radius: 30px;
   position: relative;
@@ -175,8 +175,7 @@ header h1 {
 }
 
 .popup h2 {
-  padding-top: 20px;
-  padding-left: 55px;
+  text-align: center;
   color: rgb(228, 35, 35);
 }
 
