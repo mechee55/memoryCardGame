@@ -2,23 +2,9 @@
 let card = document.getElementsByClassName('card')
 let cardsInArray = [...card]
 let openedCards = []
-
+let matchedCard = document.getElementsByClassName('match')
 const deck = document.getElementById('card-deck')
 const popup = document.querySelector('#popup1')
-
-function shuffle (array) {
-  let currentIndex = array.length, temporaryValue, randomIndex
-
-  while (currentIndex !== 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex)
-    currentIndex -= 1
-    temporaryValue = array[currentIndex]
-    array[currentIndex] = array[randomIndex]
-    array[randomIndex] = temporaryValue
-  }
-
-  return array
-};
 
 // game timer
 let timer = document.querySelector('.timer')
@@ -37,37 +23,48 @@ function time () {
   }, 1000)
 }
 
-// count player's moves
-let moves = 0
+// count moves
 let counter = document.querySelector('.moves')
 const stars = document.querySelectorAll('.fa-star')
 let allStars = [...stars]
+let moves = 0
 
 function count () {
   moves++
   counter.innerHTML = moves
-  // start timer on first click
   if (moves === 1) {
-    second = 0
-    minute = 0
     time()
   }
-  
+
   // the stars decrease as the moves' number go up
-  // if the move's number is more than 8, and less than 12,
+  // if the move's number is more than 8, and less than 11,
+  // hide the 3rd star
   if (moves > 8 && moves < 11) {
     allStars[2].style.visibility = 'collapse'
-  } else if (moves > 12) {
+  } else if (moves > 14) {
     allStars[1].style.visibility = 'collapse'
     allStars[2].style.visibility = 'collapse'
   }
+}
+
+function shuffle (array) {
+  let currentIndex = array.length, temporaryValue, randomIndex
+
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex)
+    currentIndex -= 1
+    temporaryValue = array[currentIndex]
+    array[currentIndex] = array[randomIndex]
+    array[randomIndex] = temporaryValue
+  }
+
+  return array
 }
 
 function startGame () {
   cardsInArray = shuffle(cardsInArray)
   // loop through to remove all exisiting classes from each card
   for (let i = 0; i < cardsInArray.length; i++) {
-    deck.innerHTML = '';
     [].forEach.call(cardsInArray, function (item) {
       deck.appendChild(item)
     })
@@ -96,7 +93,7 @@ let displayCard = (e) => {
   e.target.classList.toggle('disabled')
 }
 
-// loop to add event listeners to each card
+// loop through the array to add event listeners to each card
 for (let i = 0; i < cardsInArray.length; i++) {
   card = cardsInArray[i]
   card.addEventListener('click', displayCard)
@@ -107,8 +104,7 @@ for (let i = 0; i < cardsInArray.length; i++) {
 // add opened cards to openedCards list and check if the cards match
 function cardOpen () {
   openedCards.push(this)
-  let length = openedCards.length
-  if (length === 2) {
+  if (openedCards.length === 2) {
     count()
     if (openedCards[0].type === openedCards[1].type) {
       matched()
@@ -116,10 +112,9 @@ function cardOpen () {
       unmatched()
     }
   }
-};
+}
 
 // when cards match
-let matchedCard = document.getElementsByClassName('match')
 function matched () {
   openedCards[0].classList.add('match', 'disabled')
   openedCards[1].classList.add('match', 'disabled')
@@ -162,15 +157,15 @@ function congratsMessage () {
   if (matchedCard.length === 16) {
     popup.classList.add('show')
     clearInterval(interval)
+
     let finalTime = timer.innerHTML
-    
     let starRating = document.querySelector('.stars').innerHTML
 
     document.getElementById('moveResult').innerHTML = moves
     document.getElementById('starRating').innerHTML = starRating
     document.getElementById('timeResult').innerHTML = finalTime
     closePopup()
-  };
+  }
 }
 
 let closeIcon = document.querySelector('.close')
