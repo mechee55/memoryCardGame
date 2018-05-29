@@ -41,6 +41,8 @@ function time () {
 let moves = 0
 let counter = document.querySelector('.moves')
 const stars = document.querySelectorAll('.fa-star')
+let allStars = [...stars]
+
 function count () {
   moves++
   counter.innerHTML = moves
@@ -50,17 +52,14 @@ function count () {
     minute = 0
     time()
   }
-
-  if (moves > 8 && moves < 15) {
-    for (let i = 0; i < 3; i++) {
-      if (i > 1) {
-        stars[i].style.visibility = 'collapse'
-      }
-    }
-  } else if (moves > 16) {
-    for (let i = 0; i < 3; i++) {
-      stars[i].style.visibility = 'collapse'
-    }
+  
+  // the stars decrease as the moves' number go up
+  // if the move's number is more than 8, and less than 12,
+  if (moves > 8 && moves < 11) {
+    allStars[2].style.visibility = 'collapse'
+  } else if (moves > 12) {
+    allStars[1].style.visibility = 'collapse'
+    allStars[2].style.visibility = 'collapse'
   }
 }
 
@@ -77,11 +76,14 @@ function startGame () {
   // reset moves
   moves = 0
   counter.innerHTML = moves
+  for (let i = 0; i < 3; i++) {
+    allStars[i].style.visibility = 'visible'
+  }
 
   // reset timer
   let timer = document.querySelector('.timer')
-  clearInterval(interval)
   timer.innerHTML = '0 mins 0 secs'
+  clearInterval(interval)
 }
 
 // shuffles cards when page is loads
@@ -156,14 +158,14 @@ function enable () {
   })
 }
 
-let starRating = document.querySelector('.stars').innerHTML
-
 function congratsMessage () {
-
   if (matchedCard.length === 16) {
+    popup.classList.add('show')
     clearInterval(interval)
     let finalTime = timer.innerHTML
-    popup.classList.add('show')
+    
+    let starRating = document.querySelector('.stars').innerHTML
+
     document.getElementById('moveResult').innerHTML = moves
     document.getElementById('starRating').innerHTML = starRating
     document.getElementById('timeResult').innerHTML = finalTime
