@@ -25,7 +25,7 @@ const stars = document.querySelectorAll('.fa-star')
 let allStars = [...stars]
 let moves = 0
 
-// The function to count the moves on the first match 
+// The function to count the moves on the first match
 function countMoves () {
   moves++
   counter.innerHTML = moves
@@ -107,7 +107,7 @@ function cardOpen () {
     }
   }
 
-  // if the timer hasn't started, then activate the timer (NEW AFTER REVIEW!!!!)
+  // If the timer hasn't started, then activate the timer (NEW AFTER REVIEW!!!!)
   if (second === 0) {
     countTime()
   }
@@ -184,7 +184,6 @@ function closePopup () {
 }
 
 // These two functions below are used in the index.html
-
 // REPLAY button
 function replay () {
   popup.classList.remove('show')
