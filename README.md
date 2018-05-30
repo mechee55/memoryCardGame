@@ -8,7 +8,7 @@
 
 This game was written in vanilla JavaScript(ES6)
 
-It's missing a media query for tablet/ipad
+It's missing the media query for tablet/ipad
 
 ** How this game works **
 

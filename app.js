@@ -77,9 +77,10 @@ function initGame () {
 
   // reset timer
   let timer = document.querySelector('.timer')
+  clearInterval(interval)
   second = 0
   timer.innerHTML = '0 mins 0 secs'
-  clearInterval(interval)
+
   // clear the openCards array from the previous game (NEW AFTER REVIEW!!!!!!!!!!!!!!)
   openedCards = []
 }
@@ -183,12 +184,17 @@ function closePopup () {
 }
 
 // These two functions below are used in the index.html
-function playAgain () {
+
+// REPLAY button
+function replay () {
   popup.classList.remove('show')
   initGame()
 }
 
+// REFRESH button
 function refresh () {
   initGame()
-  countTime()
+
+  // Without this clearInterval, the timer starts automatically when ????// refreshed
+  clearInterval(interval)
 }
