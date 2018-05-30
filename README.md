@@ -7,8 +7,9 @@
 ## Instructions
 
 This game was written in vanilla JavaScript(ES6)
+No Bootstrap or jQuery was used.
 
-It's missing the media query for tablet/ipad
+Flexbox was used for the positioning of the card.
 
 ** How this game works **
 
@@ -18,6 +19,8 @@ It's missing the media query for tablet/ipad
 * If the cards don't match, both cards are flipped face down
 * The game ends once all cards have been matched
 * The result shows at the end of the game
+
+The player receives the results of the game upon completeion of the game
 
 For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
 

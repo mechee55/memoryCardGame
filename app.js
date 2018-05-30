@@ -79,6 +79,7 @@ function initGame () {
   let timer = document.querySelector('.timer')
   clearInterval(interval)
   second = 0
+  minute = 0
   timer.innerHTML = '0 mins 0 secs'
 
   // clear the openCards array from the previous game (NEW AFTER REVIEW!!!!!!!!!!!!!!)
@@ -108,7 +109,7 @@ function cardOpen () {
   }
 
   // If the timer hasn't started, then activate the timer (NEW AFTER REVIEW!!!!)
-  if (second === 0) {
+  if (openedCards.length === 1 && second === 0) {
     countTime()
   }
 }
@@ -193,7 +194,5 @@ function replay () {
 // REFRESH button
 function refresh () {
   initGame()
-
-  // Without this clearInterval, the timer starts automatically when ????// refreshed
   clearInterval(interval)
 }
