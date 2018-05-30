@@ -6,47 +6,6 @@ let matchedCard = document.getElementsByClassName('match')
 const deck = document.getElementById('card-deck')
 const popup = document.querySelector('#popup1')
 
-// game timer
-let timer = document.querySelector('.timer')
-let second = 0
-let minute = 0
-var interval
-
-function time () {
-  interval = setInterval(function () {
-    timer.innerHTML = `${minute} mins ${second} secs`
-    second++
-    if (second === 60) {
-      minute++
-      second = 0
-    }
-  }, 1000)
-}
-
-// count moves
-let counter = document.querySelector('.moves')
-const stars = document.querySelectorAll('.fa-star')
-let allStars = [...stars]
-let moves = 0
-
-function count () {
-  moves++
-  counter.innerHTML = moves
-  if (moves === 1) {
-    time()
-  }
-
-  // the stars decrease as the moves' number go up
-  // if the move's number is more than 8, and less than 11,
-  // hide the 3rd star
-  if (moves > 8 && moves < 11) {
-    allStars[2].style.visibility = 'collapse'
-  } else if (moves > 14) {
-    allStars[1].style.visibility = 'collapse'
-    allStars[2].style.visibility = 'collapse'
-  }
-}
-
 function shuffle (array) {
   let currentIndex = array.length, temporaryValue, randomIndex
 
@@ -61,7 +20,46 @@ function shuffle (array) {
   return array
 }
 
-function startGame () {
+let counter = document.querySelector('.moves')
+const stars = document.querySelectorAll('.fa-star')
+let allStars = [...stars]
+let moves = 0
+
+// The function to count the moves on the first match 
+function countMoves () {
+  moves++
+  counter.innerHTML = moves
+
+  // the stars decrease as the moves' number go up
+  if (moves > 8 && moves < 18) {
+    allStars[2].style.visibility = 'collapse'
+  } else if (moves > 19) {
+    allStars[1].style.visibility = 'collapse'
+    allStars[2].style.visibility = 'collapse'
+  }
+}
+
+// game timer
+let timer = document.querySelector('.timer')
+let second = 0
+let minute = 0
+var interval
+
+// The function to count time.  This function has to start on the first click
+function countTime () {
+  interval = setInterval(function () {
+    timer.innerHTML = `${minute} mins ${second} secs`
+    second++
+
+    if (second === 60) {
+      minute++
+      second = 0
+    }
+  }, 1000)
+}
+
+// This function initializes everything.  It does NOT start counting time
+function initGame () {
   cardsInArray = shuffle(cardsInArray)
   // loop through to remove all exisiting classes from each card
   for (let i = 0; i < cardsInArray.length; i++) {
@@ -79,12 +77,15 @@ function startGame () {
 
   // reset timer
   let timer = document.querySelector('.timer')
+  second = 0
   timer.innerHTML = '0 mins 0 secs'
   clearInterval(interval)
+  // clear the openCards array from the previous game (NEW AFTER REVIEW!!!!!!!!!!!!!!)
+  openedCards = []
 }
 
-// shuffles cards when page is loads
-document.body.onload = startGame()
+// shuffles cards when page loads
+document.body.onload = initGame()
 
 // toggles open and show class to display cards
 let displayCard = (e) => {
@@ -93,24 +94,21 @@ let displayCard = (e) => {
   e.target.classList.toggle('disabled')
 }
 
-// loop through the array to add event listeners to each card
-for (let i = 0; i < cardsInArray.length; i++) {
-  card = cardsInArray[i]
-  card.addEventListener('click', displayCard)
-  card.addEventListener('click', cardOpen)
-  card.addEventListener('click', congratsMessage)
-}
-
 // add opened cards to openedCards list and check if the cards match
 function cardOpen () {
   openedCards.push(this)
   if (openedCards.length === 2) {
-    count()
+    countMoves()
     if (openedCards[0].type === openedCards[1].type) {
       matched()
     } else {
       unmatched()
     }
+  }
+
+  // if the timer hasn't started, then activate the timer (NEW AFTER REVIEW!!!!)
+  if (second === 0) {
+    countTime()
   }
 }
 
@@ -168,15 +166,29 @@ function congratsMessage () {
   }
 }
 
+// loop through the array to add event listeners to each card
+for (let i = 0; i < cardsInArray.length; i++) {
+  card = cardsInArray[i]
+  card.addEventListener('click', displayCard)
+  card.addEventListener('click', cardOpen)
+  card.addEventListener('click', congratsMessage)
+}
+
 let closeIcon = document.querySelector('.close')
 function closePopup () {
   closeIcon.addEventListener('click', function () {
     popup.classList.remove('show')
-    startGame()
+    initGame()
   })
 }
 
+// These two functions below are used in the index.html
 function playAgain () {
   popup.classList.remove('show')
-  startGame()
+  initGame()
+}
+
+function refresh () {
+  initGame()
+  countTime()
 }
