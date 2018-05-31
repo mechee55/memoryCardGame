@@ -118,8 +118,8 @@ function cardOpen () {
 function matched () {
   openedCards[0].classList.add('match', 'disabled')
   openedCards[1].classList.add('match', 'disabled')
-  openedCards[0].classList.remove('show', 'open', 'no-event')
-  openedCards[1].classList.remove('show', 'open', 'no-event')
+  openedCards[0].classList.remove('show', 'open')
+  openedCards[1].classList.remove('show', 'open')
   openedCards = []
 }
 
@@ -129,8 +129,8 @@ function unmatched () {
   openedCards[1].classList.add('unmatched')
   disable()
   setTimeout(function () {
-    openedCards[0].classList.remove('show', 'open', 'no-event', 'unmatched')
-    openedCards[1].classList.remove('show', 'open', 'no-event', 'unmatched')
+    openedCards[0].classList.remove('show', 'open', 'unmatched')
+    openedCards[1].classList.remove('show', 'open', 'unmatched')
     enable()
     openedCards = []
   }, 1000)

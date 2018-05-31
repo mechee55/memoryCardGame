@@ -108,7 +108,6 @@ header h1 {
 
 .deck .card.disabled {
   pointer-events: none;
-  opacity: 0.9;
 }
 
 /* Score Panel */
