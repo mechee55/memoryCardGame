@@ -138,14 +138,14 @@ function unmatched () {
 
 // disable cards temporarily
 function disable () {
-  Array.prototype.filter.call(cardsInArray, function (card) {
+  cardsInArray.filter(function (card) {
     card.classList.add('disabled')
   })
 }
 
 // enable cards and disable matched cards
 function enable () {
-  Array.prototype.filter.call(cardsInArray, function (card) {
+  cardsInArray.filter(function (card) {
     card.classList.remove('disabled')
     for (let i = 0; i < matchedCard.length; i++) {
       matchedCard[i].classList.add('disabled')
